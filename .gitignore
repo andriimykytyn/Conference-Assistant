@@ -1,0 +1,9 @@
+# User specific directories and files
+.idea/
+target/
+conference-assistant.iml
+conferenceassistant.iml
+
+#IntelliJ
+out/
+.idea_modules/
