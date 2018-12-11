@@ -1,5 +1,5 @@
 package com.conference.dao.entities;
-
+//tut buv Roma, i vin ce ba4yv
 public class Users_usr {
     private int id_usr;
     private String email_usr;
