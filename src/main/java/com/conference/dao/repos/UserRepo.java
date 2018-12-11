@@ -24,8 +24,6 @@ public class UserRepo {
             if (rs.next()) {
                 Users_usr user = new Users_usr(
                         rs.getInt("id_usr"),
-                        rs.getString("firstname_usr"),
-                        rs.getString("lastname_usr"),
                         rs.getString("email_usr"),
                         rs.getString("role_usr"),
                         rs.getString("nickname_usr"),
