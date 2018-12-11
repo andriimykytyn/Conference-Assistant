@@ -11,7 +11,7 @@ public class Users_usr {
     public Users_usr() {
     }
 
-    public Users_usr(int id_usr, String firstname_usr, String lastname_usr, String email_usr, String role_usr, String nickname_usr, String password_usr) {
+    public Users_usr(int id_usr, String email_usr, String role_usr, String nickname_usr, String password_usr) {
         this.id_usr = id_usr;
         this.email_usr = email_usr;
         this.role_usr = role_usr;
