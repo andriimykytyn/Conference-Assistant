@@ -11,6 +11,9 @@ public class IndexSingleton {
 
     private String htmlPath;
     private String page;
+    private String header;
+    private String login;
+    private String register;
 
     private static IndexSingleton ourInstance = new IndexSingleton();
 
@@ -21,18 +24,49 @@ public class IndexSingleton {
     private IndexSingleton() {
     }
 
-
     public String getHtmlPath() {
         return htmlPath;
     }
 
-    public void setHtmlPath(String htmlPath) {
-        this.htmlPath = htmlPath;
+    public String getPage() {
+        return page;
     }
 
-    public String getPage() { return page; }
+    public void setPage(String page) {
+        this.page = page;
+    }
 
-    public void setPage(String page) { this.page = page; }
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getRegister() {
+        return register;
+    }
+
+    public void setRegister(String register) {
+        this.register = register;
+    }
+
+    public void setHtmlPath(String htmlPath) {
+        this.htmlPath = htmlPath;
+        this.page = getPartialHtml("index.html");
+        this.header = getPartialHtml("header.html");
+        this.login = getPartialHtml("login.html");
+        this.register = getPartialHtml("register.html");
+    }
 
     public String getPartialHtml(String filename) {
         StringBuilder strb = new StringBuilder();

@@ -1,21 +1,18 @@
 package com.conference.controllers;
 
-import com.conference.dao.entities.Users_usr;
-import com.conference.dao.repos.UserRepo;
 import com.conference.views.IndexSingleton;
-import com.conference.views.LoginView;
+import com.conference.views.SignupView;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "LoginServlet", urlPatterns ={"/login"}, loadOnStartup = 1)
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "SignupServlet", urlPatterns ={"/signup"})
+public class SignupServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -24,24 +21,8 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        HttpSession session = request.getSession();
-
-        if (request.getParameter("email") != null) {
-            UserRepo userRepo = new UserRepo();
-            Users_usr usr = userRepo.getUserByEmailByPassword(request.getParameter("email"),
-                    request.getParameter("password"));
-            if (usr == null) {
-                out.write("Please Login Again");
-            } else {
-                session.setAttribute("user", usr);
-                response.sendRedirect("/login");
-            }
-        }
-
-        LoginView loginView = new LoginView();
-        out.println(loginView.getHtml());
-
-
+        SignupView signupView = new SignupView();
+        out.println(signupView.getHtml());
     }
 
     @Override

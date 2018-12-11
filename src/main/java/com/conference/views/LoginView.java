@@ -1,5 +1,14 @@
 package com.conference.views;
 
-public class LoginView extends BaseView {
+public class LoginView {
 
+    public String getHtml() {
+        IndexSingleton indexSingleton = IndexSingleton.getInstance();
+        return indexSingleton.getPage()
+                .replace("<!--#header#-->", indexSingleton.getHeader())
+                .replace("<!--#main#-->", indexSingleton.getLogin())
+                .replace("#action#", "/signup")
+                .replace("<!--#useraction#-->", "Sign up")
+                .replace("<!--#useraction#-->","Sign up");
+    }
 }
