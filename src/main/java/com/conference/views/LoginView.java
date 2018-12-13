@@ -7,7 +7,7 @@ public class LoginView {
         return indexSingleton.getPage()
                 .replace("<!--#header#-->", indexSingleton.getHeader())
                 .replace("<!--#main#-->", indexSingleton.getLogin())
-                .replace("#action#", "/signup")
+                .replace("#action#", "/user/signup")
                 .replace("<!--#useraction#-->", "Sign up")
                 .replace("<!--#useraction#-->","Sign up");
     }
