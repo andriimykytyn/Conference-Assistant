@@ -4,6 +4,7 @@ import com.conference.dao.entities.Users_usr;
 import com.conference.dao.repos.UserRepo;
 import com.conference.views.IndexSingleton;
 import com.conference.views.LoginView;
+import com.conference.views.SignupView;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,8 +15,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"}, loadOnStartup = 1)
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "UserServlet", urlPatterns ={"/user/*"}, loadOnStartup = 1)
+public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -25,29 +26,26 @@ public class LoginServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
 
-        LoginView loginView = new LoginView();
-        out.println(loginView.getHtml());
-
-        if (request.getParameter("email") != null) {
+        if (request.getParameter("email") != null && request.getParameter("password") != null ) {
             UserRepo userRepo = new UserRepo();
-            Users_usr usr = userRepo.getUserByEmailByPassword(request.getParameter("email"),
-                    request.getParameter("password"));
-            if (usr == null) {
-                out.write("Please, log in again");
-            } else {
-                session.setAttribute("user", usr);
-                response.sendRedirect("/main");
-            }
+            Users_usr usr = new Users_usr();
+            usr.setEmail_usr(request.getParameter("email"));
+            usr.setNickname_usr(request.getParameter("username"));
+            usr.setPassword_usr(request.getParameter("password"));
+            userRepo.saveUser(usr);
+            response.sendRedirect("/login");
         }
-    }
 
 
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        //set path
-        String path = getServletContext().getRealPath("/html/");
-        IndexSingleton indexSingleton = IndexSingleton.getInstance();
-        indexSingleton.setHtmlPath(path);
+        switch (request.getPathInfo()) {
+            case "/signup":
+                SignupView signupView = new SignupView();
+                out.println(signupView.getHtml());
+                break;
+            case "/logout":
+                session.setAttribute("user", null);
+                response.sendRedirect("/login");
+                break;
+        }
     }
 }

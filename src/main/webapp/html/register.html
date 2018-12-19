@@ -1,22 +1,28 @@
 <section class="row justify-content-center mt-5">
     <div class="col-12 col-sm-8 col-md-6">
-        <form>
+        <form class="needs-validation" novalidate>
             <div class="form-group">
                 <label for="input-user-name-id">User Name</label>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">@</span>
                     </div>
-                    <input type="text" name="username" class="form-control" id="input-user-name-id" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    <input type="text" name="username" class="form-control" id="input-user-name-id" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required>
+                    <div class="invalid-feedback">
+                        Please choose a unique username.
+                    </div>
                 </div>
                 <small id="userNameHelp" class="form-text text-muted">Come up with a unique username.</small>
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                 <div class="input-group mb-3">
-                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
                     <div class="input-group-append">
                         <span class="input-group-text" id="basic-addon2">@example.com</span>
+                    </div>
+                    <div class="invalid-feedback">
+                        Please provide a unique email address.
                     </div>
                 </div>
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
@@ -24,15 +30,14 @@
             <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
                 <div class="input-group mb-3">
-                    <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
                     <div class="input-group-append">
                         <button class="btn btn-outline-dark" type="submit" id="button-addon2">Submit</button>
                     </div>
+                    <div class="invalid-feedback">
+                        Please provide your password.
+                    </div>
                 </div>
-            </div>
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
             </div>
         </form>
     </div>

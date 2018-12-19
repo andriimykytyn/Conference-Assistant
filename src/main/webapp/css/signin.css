@@ -5,6 +5,13 @@ body {
 
 footer {
     text-align: center;
+    background: darkslategray;
+    color: #fff;
+    padding: 50px;
+}
+
+main {
+    height: 100%;
 }
 
 body {

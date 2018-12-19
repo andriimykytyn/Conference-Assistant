@@ -8,7 +8,6 @@ public class SignupView{
                 .replace("<!--#header#-->", indexSingleton.getHeader())
                 .replace("<!--#main#-->", indexSingleton.getRegister())
                 .replace("#action#", "/login")
-                .replace("<!--#useraction#-->", "Log in")
                 .replace("<!--#useraction#-->","Log in");
     }
 
