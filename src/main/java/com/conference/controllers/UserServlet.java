@@ -29,17 +29,22 @@ public class UserServlet extends HttpServlet {
 
         if (request.getParameter("email") != null && request.getParameter("password") != null ) {
             SignupFormValidator signupFormValidator = new SignupFormValidator(
-                    request.getParameter("username"),
                     request.getParameter("email"),
-                    request.getParameter("password")
+                    request.getParameter("password"),
+                    request.getParameter("username")
             );
 
             if (!signupFormValidator.isFormValid()) {
                 SignupView signupView = new SignupView();
-                out.println(signupView.getHtml().replace("<!--emailinvalid-->",signupFormValidator.getEmailMessage())
-                        .replace("<!--passwordinvalid-->", signupFormValidator.getPasswordMessage())
-                        .replace("<!--usernameinvalid-->", signupFormValidator.getUsernameMessage())
-                );
+                if (signupFormValidator.getEmailMessage() != null) {
+                    out.println(signupView.getHtml().replace("<!--emailinvalid-->",signupFormValidator.getEmailMessage()));
+                }
+                if (signupFormValidator.getPasswordMessage() != null) {
+                    out.println(signupView.getHtml().replace("<!--passwordinvalid-->", signupFormValidator.getPasswordMessage()));
+                }
+                if (signupFormValidator.getUsernameMessage() != null) {
+                    out.println(signupView.getHtml().replace("<!--usernameinvalid-->", signupFormValidator.getUsernameMessage()));
+                }
             } else {
                 UserRepo userRepo = new UserRepo();
                 Users_usr usr = new Users_usr();

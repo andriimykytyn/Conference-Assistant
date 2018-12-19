@@ -77,7 +77,7 @@ public class SignupFormValidator {
 
       //check password (contain numeric symbols)
       CheckField checkFieldNumeric = field -> {
-          boolean result = field.matches("(?=.*[0-9])");
+          boolean result = field.matches("^(?=.*[0-9])$");
           if (!result){
               passwordMessage = "Password must contain at least one numeric symbol!";
           }
