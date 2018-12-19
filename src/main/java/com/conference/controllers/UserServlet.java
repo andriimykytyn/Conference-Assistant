@@ -2,6 +2,7 @@ package com.conference.controllers;
 
 import com.conference.dao.entities.Users_usr;
 import com.conference.dao.repos.UserRepo;
+import com.conference.formvalidator.SignupFormValidator;
 import com.conference.views.IndexSingleton;
 import com.conference.views.LoginView;
 import com.conference.views.SignupView;
@@ -27,13 +28,27 @@ public class UserServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         if (request.getParameter("email") != null && request.getParameter("password") != null ) {
-            UserRepo userRepo = new UserRepo();
-            Users_usr usr = new Users_usr();
-            usr.setEmail_usr(request.getParameter("email"));
-            usr.setNickname_usr(request.getParameter("username"));
-            usr.setPassword_usr(request.getParameter("password"));
-            userRepo.saveUser(usr);
-            response.sendRedirect("/login");
+            SignupFormValidator signupFormValidator = new SignupFormValidator(
+                    request.getParameter("username"),
+                    request.getParameter("email"),
+                    request.getParameter("password")
+            );
+
+            if (!signupFormValidator.isFormValid()) {
+                SignupView signupView = new SignupView();
+                out.println(signupView.getHtml().replace("<!--emailinvalid-->",signupFormValidator.getEmailMessage())
+                        .replace("<!--passwordinvalid-->", signupFormValidator.getPasswordMessage())
+                        .replace("<!--usernameinvalid-->", signupFormValidator.getUsernameMessage())
+                );
+            } else {
+                UserRepo userRepo = new UserRepo();
+                Users_usr usr = new Users_usr();
+                usr.setNickname_usr(request.getParameter("username"));
+                usr.setEmail_usr(request.getParameter("email"));
+                usr.setPassword_usr(request.getParameter("password"));
+                userRepo.saveUser(usr);
+                response.sendRedirect("/login");
+            }
         }
 
 
