@@ -57,10 +57,6 @@ public class SignupFormValidator {
           }
       };
 
-      if (!checkFieldLength.isCorrect(username)) {
-          return false;
-      }
-
       //check email validity
       CheckField checkFieldEmail = field -> {
           boolean result = field.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+
@@ -71,10 +67,6 @@ public class SignupFormValidator {
           return result;
       };
 
-      if (!checkFieldEmail.isCorrect(email)) {
-          return false;
-      }
-
       //check password (contain numeric symbols)
       CheckField checkFieldNumeric = field -> {
           boolean result = field.matches("(?=.*[0-9])");
@@ -84,10 +76,8 @@ public class SignupFormValidator {
           return result;
       };
 
-      if (!checkFieldNumeric.isCorrect(password)) {
-          return false;
-      }
-      
-      return true;
+      return checkFieldLength.isCorrect(username)
+              && checkFieldEmail.isCorrect(email)
+              && checkFieldNumeric.isCorrect(password);
   }
 }

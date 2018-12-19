@@ -62,10 +62,10 @@ public class IndexSingleton {
 
     public void setHtmlPath(String htmlPath) {
         this.htmlPath = htmlPath;
-        this.page = getPartialHtml("index.html");
-        this.header = getPartialHtml("header.html");
-        this.login = getPartialHtml("login.html");
-        this.register = getPartialHtml("register.html");
+        this.page = getPartialHtml("/index.html");
+        this.header = getPartialHtml("/header.html");
+        this.login = getPartialHtml("/login.html");
+        this.register = getPartialHtml("/register.html");
     }
 
     public String getPartialHtml(String filename) {
