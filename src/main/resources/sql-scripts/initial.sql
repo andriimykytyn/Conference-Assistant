@@ -1,6 +1,11 @@
 CREATE DATABASE IF NOT EXISTS conferences;
 USE conferences;
 
+-- Наступні дві команди створюють юзера БД із правами доступу (що б у всіх на проекті був однаковий)
+-- Ці команди достатньо виконати лише ОДИН РАЗ!!!
+-- CREATE USER 'andrew'@'localhost' IDENTIFIED BY 'kosmones1';
+-- GRANT ALL PRIVILEGES ON conferences . * TO 'andrew'@'localhost';
+
 CREATE TABLE IF NOT EXISTS users_usr (
   id_usr INT NOT NULL,
   firstname_usr VARCHAR(45) NOT NULL,
