@@ -36,14 +36,12 @@ public class UserServlet extends HttpServlet {
 
             if (!signupFormValidator.isFormValid()) {
                 SignupView signupView = new SignupView();
-                if (signupFormValidator.getEmailMessage() != null) {
-                    out.println(signupView.getHtml().replace("<!--emailinvalid-->",signupFormValidator.getEmailMessage()));
-                }
-                if (signupFormValidator.getPasswordMessage() != null) {
-                    out.println(signupView.getHtml().replace("<!--passwordinvalid-->", signupFormValidator.getPasswordMessage()));
-                }
-                if (signupFormValidator.getUsernameMessage() != null) {
-                    out.println(signupView.getHtml().replace("<!--usernameinvalid-->", signupFormValidator.getUsernameMessage()));
+                if (signupFormValidator.getEmailMessage() != null && signupFormValidator.getPasswordMessage() != null && signupFormValidator.getUsernameMessage() != null) {
+                    out.println(signupView.getHtml()
+                            .replace("<!--emailinvalid-->",signupFormValidator.getEmailMessage())
+                            .replace("<!--passwordinvalid-->", signupFormValidator.getPasswordMessage())
+                            .replace("<!--usernameinvalid-->", signupFormValidator.getUsernameMessage())
+                    );
                 }
             } else {
                 UserRepo userRepo = new UserRepo();

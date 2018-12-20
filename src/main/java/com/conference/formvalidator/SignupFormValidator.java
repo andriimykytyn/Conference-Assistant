@@ -52,9 +52,8 @@ public class SignupFormValidator {
           if (field.length() < 5) {
               usernameMessage = "Username must contain at least 5 symbls!";
               return false;
-          } else {
-              return true;
           }
+          return true;
       };
 
       if (!checkFieldLength.isCorrect(username)) {
@@ -87,7 +86,7 @@ public class SignupFormValidator {
       if (!checkFieldNumeric.isCorrect(password)) {
           return false;
       }
-      
+
       return true;
   }
 }
