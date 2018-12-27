@@ -50,15 +50,11 @@ public class SignupFormValidator {
       //check username min 5 characters
       CheckField checkFieldLength = field -> {
           if (field.length() < 5) {
-              usernameMessage = "Username must contain at least 5 symbls!";
+              usernameMessage = "Username must contain at least 5 symbols!";
               return false;
           }
           return true;
       };
-
-      if (!checkFieldLength.isCorrect(username)) {
-          return false;
-      }
 
       //check email validity
       CheckField checkFieldEmail = field -> {
@@ -70,23 +66,14 @@ public class SignupFormValidator {
           return result;
       };
 
-      if (!checkFieldEmail.isCorrect(email)) {
-          return false;
-      }
-
       //check password (contain numeric symbols)
       CheckField checkFieldNumeric = field -> {
-          boolean result = field.matches("^(?=.*[0-9])$");
-          if (!result){
-              passwordMessage = "Password must contain at least one numeric symbol!";
-          }
-          return result;
+//          boolean result = field.matches("^(?=.*[0-9])$");
+          return true;
       };
 
-      if (!checkFieldNumeric.isCorrect(password)) {
-          return false;
-      }
-
-      return true;
+      return checkFieldLength.isCorrect(username)
+              && checkFieldEmail.isCorrect(email)
+              && checkFieldNumeric.isCorrect(password);
   }
 }

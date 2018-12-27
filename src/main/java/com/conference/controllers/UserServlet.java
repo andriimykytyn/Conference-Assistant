@@ -26,6 +26,7 @@ public class UserServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
+        String html = new SignupView().getHtml();
 
         if (request.getParameter("email") != null && request.getParameter("password") != null ) {
             SignupFormValidator signupFormValidator = new SignupFormValidator(
@@ -35,13 +36,17 @@ public class UserServlet extends HttpServlet {
             );
 
             if (!signupFormValidator.isFormValid()) {
-                SignupView signupView = new SignupView();
-                if (signupFormValidator.getEmailMessage() != null && signupFormValidator.getPasswordMessage() != null && signupFormValidator.getUsernameMessage() != null) {
-                    out.println(signupView.getHtml()
-                            .replace("<!--emailinvalid-->",signupFormValidator.getEmailMessage())
-                            .replace("<!--passwordinvalid-->", signupFormValidator.getPasswordMessage())
-                            .replace("<!--usernameinvalid-->", signupFormValidator.getUsernameMessage())
-                    );
+                String emailMessage = signupFormValidator.getEmailMessage();
+                String passwordMessage = signupFormValidator.getPasswordMessage();
+                String usernameMessage = signupFormValidator.getUsernameMessage();
+                if (!isEmptyString(emailMessage)) {
+                    html = html.replace("<!--emailinvalid-->", emailMessage);
+                }
+                if (!isEmptyString(passwordMessage)) {
+                    html = html.replace("<!--passwordinvalid-->", passwordMessage);
+                }
+                if (!isEmptyString(usernameMessage)) {
+                    html = html.replace("<!--usernameinvalid-->", usernameMessage);
                 }
             } else {
                 UserRepo userRepo = new UserRepo();
@@ -54,16 +59,18 @@ public class UserServlet extends HttpServlet {
             }
         }
 
-
         switch (request.getPathInfo()) {
             case "/signup":
-                SignupView signupView = new SignupView();
-                out.println(signupView.getHtml());
+                out.println(html);
                 break;
             case "/logout":
                 session.setAttribute("user", null);
                 response.sendRedirect("/login");
                 break;
         }
+    }
+
+    private static boolean isEmptyString(String s) {
+        return s == null || s.isEmpty();
     }
 }
