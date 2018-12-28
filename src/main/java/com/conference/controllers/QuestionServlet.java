@@ -38,7 +38,7 @@ public class QuestionServlet extends HttpServlet {
         if ( request.getParameter("question") != null ) {
             Questions_qs questions_qs = new Questions_qs();
             questions_qs.setQuestion_qs(request.getParameter("quesiton"));
-            questions_qs.setFk_id_rp(currentReport.getId_rp);
+//            questions_qs.setFk_id_rp(currentReport.getId_rp);
             questions_qs.setFk_id_usr(currentUser.getId_usr());
             QuestionRepo questionRepo = new QuestionRepo();
             questionRepo.saveQuestion(questions_qs);

@@ -15,7 +15,8 @@ public class MainView {
                 .replace("<!--#Reports#-->", "Reports")
                 .replace("<!--#Questions#-->", "Questions")
                 .replace("<!--#useraction#-->", "Log out")
-                .replace("#action#", "/user/logout");
+                .replace("#action#", "/user/logout")
+                .replace("<!--#main#-->", indexSingleton.getConferences());
 
 
     }
