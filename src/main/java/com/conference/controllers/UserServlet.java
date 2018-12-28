@@ -36,7 +36,6 @@ public class UserServlet extends HttpServlet {
             );
 
             if (!signupFormValidator.isFormValid()) {
-
                 String emailMessage = signupFormValidator.getEmailMessage();
                 String passwordMessage = signupFormValidator.getPasswordMessage();
                 String usernameMessage = signupFormValidator.getUsernameMessage();
