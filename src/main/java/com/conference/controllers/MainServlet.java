@@ -1,13 +1,12 @@
 package com.conference.controllers;
 
 import com.conference.dao.entities.Conferences_cf;
+import com.conference.dao.entities.Reports_rp;
 import com.conference.dao.entities.Users_usr;
 import com.conference.dao.repos.ConferenceRepo;
+import com.conference.dao.repos.ReportsRepo;
 import com.conference.dao.repos.UserRepo;
-import com.conference.views.IndexSingleton;
-import com.conference.views.LoginView;
-import com.conference.views.MainView;
-import com.conference.views.SignupView;
+import com.conference.views.*;
 import sun.applet.Main;
 
 import javax.servlet.ServletException;
@@ -32,10 +31,9 @@ public class MainServlet extends HttpServlet {
         Users_usr currentUser = (Users_usr) session.getAttribute("user");
         ConferenceRepo conferenceRepo = new ConferenceRepo();
         Conferences_cf  conferences_cf = conferenceRepo.getConference();
-
+        MainView mainView = new MainView();
 
         if (currentUser != null) {
-            MainView mainView = new MainView();
             out.println(mainView.getHtml()
                     .replace("<!--#username#-->", "@"+currentUser.getNickname_usr())
                     .replace("<!--Conference name-->", conferences_cf.getName_cf())
@@ -47,7 +45,25 @@ public class MainServlet extends HttpServlet {
 
         switch (request.getPathInfo()) {
             case "/reports":
-                out.println();
+                ReportsView reportsView = new ReportsView();
+                out.println(reportsView.getHtml());
+
+                ReportsRepo reportsRepo = new ReportsRepo();
+                Reports_rp reports = reportsRepo.getReportByConferenceId(request.getParameter("cf_id"));
+
+                out.println(reportsView.getHtml().replace("<!--content-->","<div class=\"report\" style=\"width: 400px; height: 100%; background-color: #333333; color: #fff; margin-top: 30px; margin-left: 15px; padding: 15px; border-radius: 3px\">\n" +
+                        "        <h2>"+reports.getName_rp()+"</h2>\n" +
+                        "        <p>"+reports.getAnnouncer_rp()+"</p>\n" +
+                        "    </div>")
+                        .replace("<form>\n" +
+                                "        <div class=\"input-group\">\n" +
+                                "            <input type=\"text\" name=\"cf_id\" class=\"form-control\" aria-describedby=\"button-addon2\">\n" +
+                                "            <div style=\"background-color: #444444; color: #fff; -webkit-border-radius: 0;-moz-border-radius: 0;border-radius: 0; border: none;\" class=\"input-group-append\">\n" +
+                                "                <button class=\"btn btn-outline-secondary\" type=\"submit\" id=\"button-addon2\">show</button>\n" +
+                                "            </div>\n" +
+                                "        </div>\n" +
+                                "    </form>", "")
+                );
                 break;
             case "/questions":
                 out.println();

@@ -1,8 +1,10 @@
 package com.conference.controllers;
 
 import com.conference.dao.entities.Questions_qs;
+import com.conference.dao.entities.Reports_rp;
 import com.conference.dao.entities.Users_usr;
 import com.conference.dao.repos.QuestionRepo;
+import com.conference.dao.repos.ReportsRepo;
 import com.conference.views.MainView;
 import com.conference.views.QuestionView;
 
@@ -34,11 +36,13 @@ public class QuestionServlet extends HttpServlet {
             response.sendRedirect("/login");
         }
 
+        ReportsRepo reportsRepo = new ReportsRepo();
+        Reports_rp report= reportsRepo.getReportByConferenceId("2");
         //save question
         if ( request.getParameter("question") != null ) {
             Questions_qs questions_qs = new Questions_qs();
-            questions_qs.setQuestion_qs(request.getParameter("quesiton"));
-//            questions_qs.setFk_id_rp(currentReport.getId_rp);
+            questions_qs.setQuestion_qs(request.getParameter("question"));
+            questions_qs.setFk_id_rp(report.getId_rp());
             questions_qs.setFk_id_usr(currentUser.getId_usr());
             QuestionRepo questionRepo = new QuestionRepo();
             questionRepo.saveQuestion(questions_qs);

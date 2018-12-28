@@ -1,6 +1,7 @@
 package com.conference.dao.repos;
 
 import com.conference.dao.entities.Conferences_cf;
+import com.conference.dao.entities.Reports_rp;
 
 import java.sql.*;
 
