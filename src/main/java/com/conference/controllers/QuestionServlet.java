@@ -42,7 +42,7 @@ public class QuestionServlet extends HttpServlet {
 
 
                 questions_qs.setQuestion_qs(request.getParameter("question"));
-                questions_qs.setFk_id_rp(reportId);
+                questions_qs.setFk_id_rp(1);
                 questions_qs.setFk_id_usr(userId);
                 questionRepo.saveQuestion(questions_qs);
 
