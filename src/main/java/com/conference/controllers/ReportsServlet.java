@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet(name = "ReportsServlet", urlPatterns = "/reports")
 public class ReportsServlet extends HttpServlet {
@@ -28,15 +29,18 @@ public class ReportsServlet extends HttpServlet {
         ReportsView reportsView = new ReportsView();
 
         ReportsRepo reportsRepo = new ReportsRepo();
-        Reports_rp reports = reportsRepo.getReportByConferenceId(request.getParameter("cf_id"));
+        List<Reports_rp> reports = reportsRepo.getReportByConferenceId(request.getParameter("cf_id"));
 
         if (currentUser != null) {
-            out.println(reportsView.getHtml()
-                    .replace("<!--#username#-->", "@" + currentUser.getNickname_usr())
-                    .replace("<!--Report Name-->", reports.getName_rp())
-                    .replace("<!--Announcer info-->", reports.getAnnouncer_rp())
-                    .replace("<!--report id-->", "" + reports.getId_rp()));
-        } else {
+            for (int i=0; i<reports.size();i++) {
+                out.print(reportsView.getHtml()
+                        .replace("<!--#username#-->", "@" + currentUser.getNickname_usr())
+                        .replace("<!--Report Name-->", reports.get(i).getName_rp())
+                        .replace("<!--Announcer info-->", reports.get(i).getAnnouncer_rp())
+                        .replace("<!--report id-->", ""+reports.get(i).getId_rp()));
+
+                }
+            } else {
             response.sendRedirect("/login");
         }
     }

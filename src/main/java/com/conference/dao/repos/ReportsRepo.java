@@ -6,30 +6,32 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReportsRepo {
-    public Reports_rp getReportByConferenceId(String id_cf) {
+    public List<Reports_rp> getReportByConferenceId(String id_cf) {
         DataSource dataSource = new DataSource();
-
-        String reportsQuery = "Select * FROM reports_rp WHERE fk_id_cf ='" + id_cf +"'";
+        List<Reports_rp> reports = new ArrayList<>();
 
         try (
                 Connection conn = dataSource.getConnection();
                 Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(reportsQuery);)
+                ResultSet rs = stmt.executeQuery("Select * FROM reports_rp WHERE fk_id_cf =" + id_cf);
+            )
         {
-            if (rs.next()) {
-                Reports_rp reports = new Reports_rp(
+            while ( rs.next() ) {
+                reports.add(new Reports_rp(
                         rs.getInt("id_rp"),
                         rs.getString("name_rp"),
                         rs.getString("announcer_rp"),
                         rs.getInt("fk_id_cf")
-                );
-                return reports;
+                ));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+
+        return reports;
     }
 }
