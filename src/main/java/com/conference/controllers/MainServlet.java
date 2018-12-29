@@ -38,6 +38,7 @@ public class MainServlet extends HttpServlet {
                     .replace("<!--#username#-->", "@"+currentUser.getNickname_usr())
                     .replace("<!--Conference name-->", conferences_cf.getName_cf())
                     .replace("<!--Short information about this conference-->", conferences_cf.getInfo_cf())
+                    .replace("<!--conference id-->", ""+conferences_cf.getId_cf())
             );
         } else {
             response.sendRedirect("/login");
@@ -46,24 +47,14 @@ public class MainServlet extends HttpServlet {
         switch (request.getPathInfo()) {
             case "/reports":
                 ReportsView reportsView = new ReportsView();
-                out.println(reportsView.getHtml());
-
                 ReportsRepo reportsRepo = new ReportsRepo();
                 Reports_rp reports = reportsRepo.getReportByConferenceId(request.getParameter("cf_id"));
 
-                out.println(reportsView.getHtml().replace("<!--content-->","<div class=\"report\" style=\"width: 400px; height: 100%; background-color: #333333; color: #fff; margin-top: 30px; margin-left: 15px; padding: 15px; border-radius: 3px\">\n" +
-                        "        <h2>"+reports.getName_rp()+"</h2>\n" +
-                        "        <p>"+reports.getAnnouncer_rp()+"</p>\n" +
-                        "    </div>")
-                        .replace("<form>\n" +
-                                "        <div class=\"input-group\">\n" +
-                                "            <input type=\"text\" name=\"cf_id\" class=\"form-control\" aria-describedby=\"button-addon2\">\n" +
-                                "            <div style=\"background-color: #444444; color: #fff; -webkit-border-radius: 0;-moz-border-radius: 0;border-radius: 0; border: none;\" class=\"input-group-append\">\n" +
-                                "                <button class=\"btn btn-outline-secondary\" type=\"submit\" id=\"button-addon2\">show</button>\n" +
-                                "            </div>\n" +
-                                "        </div>\n" +
-                                "    </form>", "")
-                );
+                out.print(reportsView.getHtml()
+                        .replace("<!--#username#-->", "@"+currentUser.getNickname_usr())
+                        .replace("<!--Report Name-->", reports.getName_rp())
+                        .replace("<!--Announcer info-->", reports.getAnnouncer_rp())
+                        .replace("<!--report id-->", ""+reports.getId_rp()));
                 break;
             case "/questions":
                 out.println();
