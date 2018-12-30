@@ -67,6 +67,6 @@ public class Users_usr {
                 ", role='" + role_usr + '\'' +
                 ", nickname='" + nickname_usr + '\'' +
                 ", password='" + password_usr + '\'' +
-                '}';
+                "}";
     }
 }

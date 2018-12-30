@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
             Users_usr usr = userRepo.getUserByEmailByPassword(request.getParameter("email"),
                     request.getParameter("password"));
             if (usr == null) {
-                out.write("Please, log in again");
+                out.println("Please, log in again");
             } else {
                 session.setAttribute("user", usr);
                 response.sendRedirect("/main");
