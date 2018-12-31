@@ -69,7 +69,10 @@ CREATE TABLE `questions_qs` (
 
 LOCK TABLES `questions_qs` WRITE;
 /*!40000 ALTER TABLE `questions_qs` DISABLE KEYS */;
-INSERT INTO `questions_qs` VALUES (4,'some question.',0,1,21),(5,'Hello, what is the chief objective of this report?',0,1,21),(6,'Another user\'s question here..',0,1,4),(10,NULL,0,4,21),(11,NULL,0,5,21),(12,NULL,0,1,21),(13,NULL,0,1,21),(14,NULL,0,1,21),(15,NULL,0,1,21);
+INSERT INTO `questions_qs` VALUES
+(4,'some question.',0,1,21),
+(5,'Hello, what is the chief objective of this report?',0,1,21),
+(6,'Another user\'s question here..',0,1,4);
 /*!40000 ALTER TABLE `questions_qs` ENABLE KEYS */;
 UNLOCK TABLES;
 
