@@ -17,8 +17,7 @@ public class ReportsView {
                 .replace("<!--#Questions#-->", "Questions")
                 .replace("<!--#useraction#-->", "Log out")
                 .replace("#action#", "/user/logout")
-                .replace("<!--#main#-->", indexSingleton.getReports()
-                .replace(indexSingleton.getConferences(), indexSingleton.getReports()));
+                .replace("<!--#main#-->", indexSingleton.getReports());
     }
 
 

@@ -2,10 +2,8 @@ package com.conference.formvalidator;
 
 public class SignupFormValidator {
   private String email;
-  private String password;
   private String username;
   private String emailMessage;
-  private String passwordMessage;
   private String usernameMessage;
 
   private interface CheckField {
@@ -17,16 +15,11 @@ public class SignupFormValidator {
 
     public SignupFormValidator(String email, String password, String username) {
         this.email = email;
-        this.password = password;
         this.username = username;
     }
 
-    public void setEmail(String email) {
+  public void setEmail(String email) {
       this.email = email;
-  }
-
-  public void setPassword(String password) {
-      this.password = password;
   }
 
   public void setUsername(String username) {
@@ -35,10 +28,6 @@ public class SignupFormValidator {
 
   public String getEmailMessage() {
       return emailMessage;
-  }
-
-  public String getPasswordMessage() {
-      return passwordMessage;
   }
 
   public String getUsernameMessage() {
@@ -66,14 +55,8 @@ public class SignupFormValidator {
           return result;
       };
 
-      //check password (contain numeric symbols)
-      CheckField checkFieldNumeric = field -> {
-//          boolean result = field.matches("^(?=.*[0-9])$");
-          return true;
-      };
 
       return checkFieldLength.isCorrect(username)
-              && checkFieldEmail.isCorrect(email)
-              && checkFieldNumeric.isCorrect(password);
+              && checkFieldEmail.isCorrect(email);
   }
 }
