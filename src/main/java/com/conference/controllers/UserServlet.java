@@ -37,17 +37,15 @@ public class UserServlet extends HttpServlet {
 
             if (!signupFormValidator.isFormValid()) {
                 String emailMessage = signupFormValidator.getEmailMessage();
-                String passwordMessage = signupFormValidator.getPasswordMessage();
                 String usernameMessage = signupFormValidator.getUsernameMessage();
+
                 if (!isEmptyString(emailMessage)) {
                     html = html.replace("<!--emailinvalid-->", emailMessage);
-                }
-                if (!isEmptyString(passwordMessage)) {
-                    html = html.replace("<!--passwordinvalid-->", passwordMessage);
                 }
                 if (!isEmptyString(usernameMessage)) {
                     html = html.replace("<!--usernameinvalid-->", usernameMessage);
                 }
+
             } else {
                 UserRepo userRepo = new UserRepo();
                 Users_usr usr = new Users_usr();
