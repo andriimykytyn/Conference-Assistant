@@ -16,8 +16,7 @@ public class ReportsView {
                         "                <a class=\"nav-link\" href=\"/reports\">Reports</a>")
                 .replace("<!--#Questions#-->", "Questions")
                 .replace("<!--#useraction#-->", "Log out")
-                .replace("#action#", "/user/logout")
-                .replace("<!--#main#-->", indexSingleton.getReports());
+                .replace("#action#", "/user/logout");
     }
 
 

@@ -3,6 +3,7 @@ package com.conference.controllers;
 import com.conference.dao.entities.Questions_qs;
 import com.conference.dao.entities.Users_usr;
 import com.conference.dao.repos.QuestionRepo;
+import com.conference.views.IndexSingleton;
 import com.conference.views.QuestionView;
 
 import javax.servlet.ServletException;
@@ -31,25 +32,27 @@ public class QuestionServlet extends HttpServlet {
         QuestionRepo questionRepo = new QuestionRepo();
         Questions_qs questions_qs = new Questions_qs();
         QuestionView questionView = new QuestionView();
+        IndexSingleton indexSingleton = IndexSingleton.getInstance();
 
         if (currentUser != null) {
             int userId = currentUser.getId_usr();
-            int reportId = Integer.parseInt(request.getParameter("rp_id"));
-
-            List<Questions_qs> questions = questionRepo.getQuestionsByReportId(String.valueOf(reportId));
-            List<Questions_qs> sortedQuestions = questions.stream()
-                    .sorted(Comparator.comparing(Questions_qs::getRating_qs))
-                    .collect(Collectors.toList());
-            for (int i=0;i<questions.size();i++) {
-                out.println(questionView.getHtml().replace("<!--questionhere<button class=\"btn btn-outline-secondary\" style=\"padding:8px;\n" +
-                                "        padding-top:0px;padding-bottom:0px;position: absolute;right: 15px;\" type=\"submit\" id=\"button-addon2\">+</button>-->"
-                        , i+1 +"."+" "+sortedQuestions.get(i).getQuestion_qs()+"<button class=\"btn btn-outline-secondary\" style=\"padding:8px;\n" +
-                                "        padding-top:0px;padding-bottom:0px;position: absolute;right: 15px;\" type=\"submit\" id=\"button-addon2\">+</button>"));
-            }
+            final int reportId = Integer.parseInt(request.getParameter("rp_id"));
 
             String questionPage = questionView.getHtml()
                     .replace("<!--#username#-->", "@" + currentUser.getNickname_usr())
                     .replace("<!--#reportid#-->", String.valueOf(reportId) );
+            out.println(questionPage);
+            List<Questions_qs> questions = questionRepo
+                    .getQuestionsByReportId(String.valueOf(reportId));
+            questions.stream().sorted(Comparator.comparing(Questions_qs::getRating_qs));
+            for (int i=0;i<questions.size();i++) {
+                out.println(indexSingleton.getQuestions().replace("<!--questionhere<button class=\"btn btn-outline-secondary\" style=\"padding:8px;\n" +
+                                "        padding-top:0px;padding-bottom:0px;position: absolute;right: 15px;\" type=\"submit\" id=\"button-addon2\">+</button>-->"
+                        , i+1 +"."+" "+questions.get(i).getQuestion_qs()+"<button class=\"btn btn-outline-secondary\" style=\"padding:8px;\n" +
+                                "        padding-top:0px;padding-bottom:0px;position: absolute;right: 15px;\" type=\"submit\" id=\"button-addon2\">+</button>"));
+            }
+
+
 
             String question = request.getParameter("question");
 
