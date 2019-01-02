@@ -16,6 +16,7 @@ public class IndexSingleton {
     private String register;
     private String questions;
     private String conferences;
+    private String reports;
 
     private static IndexSingleton ourInstance = new IndexSingleton();
 
@@ -78,6 +79,14 @@ public class IndexSingleton {
         return questions;
     }
 
+    public String getReports() {
+        return reports;
+    }
+
+    public void setReports(String reports) {
+        this.reports = reports;
+    }
+
     public void setHtmlPath(String htmlPath) {
         this.htmlPath = htmlPath;
         this.page = getPartialHtml("/index.html");
@@ -86,6 +95,7 @@ public class IndexSingleton {
         this.register = getPartialHtml("/register.html");
         this.questions = getPartialHtml("/questions.html");
         this.conferences = getPartialHtml("/conferences.html");
+        this.reports = getPartialHtml("/reports.html");
     }
 
     public String getPartialHtml(String filename) {

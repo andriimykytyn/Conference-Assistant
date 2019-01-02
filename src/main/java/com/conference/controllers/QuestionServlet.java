@@ -3,7 +3,6 @@ package com.conference.controllers;
 import com.conference.dao.entities.Questions_qs;
 import com.conference.dao.entities.Users_usr;
 import com.conference.dao.repos.QuestionRepo;
-import com.conference.views.MainView;
 import com.conference.views.QuestionView;
 
 import javax.servlet.ServletException;
@@ -28,20 +27,29 @@ public class QuestionServlet extends HttpServlet {
         Users_usr currentUser = (Users_usr) session.getAttribute("user");
 
         if (currentUser != null) {
+            int userId = currentUser.getId_usr();
+            int reportId = Integer.parseInt(request.getParameter("rp_id"));
             QuestionView questionView = new QuestionView();
-            out.println(questionView.getHtml().replace("<!--#username#-->", "@"+currentUser.getNickname_usr()));
+            String questionPage = questionView.getHtml()
+                    .replace("<!--#username#-->", "@" + currentUser.getNickname_usr())
+                    .replace("<!--#reportid#-->", String.valueOf(reportId) );
+
+            String question = request.getParameter("question");
+
+            if (question != null && !question.isEmpty()) {
+                //save question
+                QuestionRepo questionRepo = new QuestionRepo();
+                Questions_qs questions_qs = new Questions_qs();
+
+                questions_qs.setQuestion_qs(question);
+                questions_qs.setFk_id_rp(reportId);
+                questions_qs.setFk_id_usr(userId);
+                questionRepo.saveQuestion(questions_qs);
+            }
+            out.println(questionPage);
         } else {
             response.sendRedirect("/login");
         }
 
-        //save question
-        if ( request.getParameter("question") != null ) {
-            Questions_qs questions_qs = new Questions_qs();
-            questions_qs.setQuestion_qs(request.getParameter("quesiton"));
-//            questions_qs.setFk_id_rp(currentReport.getId_rp);
-            questions_qs.setFk_id_usr(currentUser.getId_usr());
-            QuestionRepo questionRepo = new QuestionRepo();
-            questionRepo.saveQuestion(questions_qs);
-        }
     }
 }
