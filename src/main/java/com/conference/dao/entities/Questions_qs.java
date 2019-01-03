@@ -1,12 +1,17 @@
 package com.conference.dao.entities;
 
-public class Questions_qs {
+public class Questions_qs implements Comparable<Questions_qs> {
     private int id_qs;
     private String question_qs;
 //  DEFAULT - 0
     private int rating_qs;
     private int fk_id_rp;
     private int fk_id_usr;
+
+    @Override
+    public int compareTo(Questions_qs other) {
+        return Integer.compare(rating_qs,other.rating_qs);
+    }
 
     public Questions_qs() {
 
