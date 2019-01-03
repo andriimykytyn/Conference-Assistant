@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,12 +45,13 @@ public class QuestionServlet extends HttpServlet {
             out.println(questionPage);
             List<Questions_qs> questions = questionRepo
                     .getQuestionsByReportId(String.valueOf(reportId));
-            questions.stream().sorted(Comparator.comparing(Questions_qs::getRating_qs));
+            Collections.sort(questions);
+            Collections.reverse(questions);
             for (int i=0;i<questions.size();i++) {
-                out.println(indexSingleton.getQuestions().replace("<!--questionhere<button class=\"btn btn-outline-secondary\" style=\"padding:8px;\n" +
-                                "        padding-top:0px;padding-bottom:0px;position: absolute;right: 15px;\" type=\"submit\" id=\"button-addon2\">+</button>-->"
-                        , i+1 +"."+" "+questions.get(i).getQuestion_qs()+"<button class=\"btn btn-outline-secondary\" style=\"padding:8px;\n" +
-                                "        padding-top:0px;padding-bottom:0px;position: absolute;right: 15px;\" type=\"submit\" id=\"button-addon2\">+</button>"));
+                out.println(indexSingleton.getQuestions().replace("<!--questionhere<a class=\"btn btn-outline-secondary\" style=\"padding:8px;\n" +
+                                "        padding-top:0px;padding-bottom:0px;position: absolute;right: 15px;\" href=\"/questions?\">+</a>-->"
+                        , i+1 +"."+" "+questions.get(i).getQuestion_qs()+"<a class=\"btn btn-outline-secondary\" style=\"padding:8px;\n" +
+                                "        padding-top:0px;padding-bottom:0px;position: absolute;right: 15px;\" href=\"/questions?\">+</a>"));
             }
 
 
